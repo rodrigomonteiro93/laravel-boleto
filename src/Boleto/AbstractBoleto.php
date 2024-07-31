@@ -1062,6 +1062,56 @@ abstract class AbstractBoleto implements BoletoContract
     }
 
     /**
+     * Define a instrução 1
+     *
+     * @param string $instrucao
+     *
+     * @return AbstractBoleto
+     * @throws \Exception
+     */
+    public function setInstrucao01(string $instrucao)
+    {
+        $this->instrucao01 = $instrucao;
+
+        return $this;
+    }
+
+    /**
+     * Retorna uma string com instruções01
+     *
+     * @return string|null
+     */
+    public function getInstrucao01()
+    {
+        return $this->instrucao01 ?? null;
+    }
+
+    /**
+     * Define a instrução 2
+     *
+     * @param string $instrucao
+     *
+     * @return AbstractBoleto
+     * @throws \Exception
+     */
+    public function setInstrucao02(string $instrucao)
+    {
+        $this->instrucao02 = $instrucao;
+
+        return $this;
+    }
+
+    /**
+     * Retorna uma string com instruções02
+     *
+     * @return string|null
+     */
+    public function getInstrucao02()
+    {
+        return $this->instrucao02 ?? null;
+    }
+
+    /**
      * Define um array com instruções (máximo 5) para impressao
      *
      * @param array $instrucoes_impressao
