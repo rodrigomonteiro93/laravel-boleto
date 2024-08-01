@@ -307,18 +307,9 @@ class Bb extends AbstractRemessa implements RemessaContract
         $this->add(148, 149, $boleto->getEspecieDocCodigo('01', 400));
         $this->add(150, 150, $boleto->getAceite());
         $this->add(151, 156, $boleto->getDataDocumento()->format('dmy'));
-        $this->add(157, 158, $boleto->getStatus() == $boleto::STATUS_BAIXA ? self::INSTRUCAO_BAIXAR : self::INSTRUCAO_SEM);
-        $this->add(159, 160, self::INSTRUCAO_SEM);
-        $diasProtesto = '00';
-        $const = $boleto->getDiasProtesto() > 0 ? sprintf('self::INSTRUCAO_PROTESTAR_VENC_%02s', $boleto->getDiasProtesto()) : 'self::INSTRUCAO_NAO_PROTESTAR';
-        if ($boleto->getStatus() != $boleto::STATUS_BAIXA) {
-            if (defined($const)) {
-                $this->add(157, 158, constant($const));
-            } else {
-                $this->add(157, 158, self::INSTRUCAO_PROTESTAR_VENC_XX);
-                $diasProtesto = Util::formatCnab('9', $boleto->getDiasProtesto(), 2, 0);
-            }
-        }
+        $diasProtesto = Util::formatCnab('9', $boleto->getDiasProtesto(), 2, 0);
+        $this->add(157, 158, $boleto->getInstrucao01() !== null ? $boleto->getInstrucao01() : self::INSTRUCAO_SEM);
+        $this->add(159, 160, $boleto->getInstrucao02() !== null ? $boleto->getInstrucao02() : self::INSTRUCAO_SEM);
         $this->add(161, 173, Util::formatCnab('9', $boleto->getMoraDia(), 13, 2));
         $this->add(174, 179, $boleto->getDesconto() > 0 ? $boleto->getDataDesconto()->format('dmy') : '000000');
         $this->add(180, 192, Util::formatCnab('9', $boleto->getDesconto(), 13, 2));
